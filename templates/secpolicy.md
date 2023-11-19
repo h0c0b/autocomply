@@ -1,4 +1,4 @@
-# Security Policy for {{companyName}}
+# {{mainSecPolicyName}} {{companyName}}
 
 ## Purpose
 
@@ -21,9 +21,11 @@ This policy applies to all employees, contractors, and affiliates of {{companyNa
 - Access to sensitive data is restricted to authorized personnel only.
 
 ### Incident Response
-{{implements: nist-csf-IN-1-1}}
+
 - In the event of a security breach, immediate action must be taken following the incident response plan.
+<!-- compliance: NIST ID.AM-6 -->
 - The CISO, {{cisoName}}, is responsible for managing the response to any security incidents.
+<!-- /compliance: NIST ID.AM-6 -->
 
 ### Network Security
 
@@ -34,6 +36,9 @@ This policy applies to all employees, contractors, and affiliates of {{companyNa
 
 - Violations of this security policy will be handled according to {{companyName}}'s disciplinary procedures.
 - Continuous monitoring will be conducted to ensure compliance with these policies.
+
+## Compliance
+
 
 ## Approval
 

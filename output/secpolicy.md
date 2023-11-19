@@ -1,4 +1,4 @@
-# Security Policy for Example SuperHero Company
+# Security Policy Example SuperHero Company
 
 ## Purpose
 
@@ -23,7 +23,9 @@ This policy applies to all employees, contractors, and affiliates of Example Sup
 ### Incident Response
 
 - In the event of a security breach, immediate action must be taken following the incident response plan.
+
 - The CISO, Jane Smith, is responsible for managing the response to any security incidents.
+
 
 ### Network Security
 

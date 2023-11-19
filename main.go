@@ -11,27 +11,45 @@ import (
 
 // Config represents the structure of your JSON config file
 type Config struct {
-	CompanyName string `json:"companyName"`
-	CeoName     string `json:"ceoName"`
-	CisoName    string `json:"cisoName"`
+	CompanyName       string `json:"companyName"`
+	CeoName           string `json:"ceoName"`
+	CisoName          string `json:"cisoName"`
+	MainSecPolicyName string `json:"mainSecPolicyName"`
 }
 
 func main() {
-	// Get the current working directory
+	// Check command-line arguments
+	if len(os.Args) < 2 {
+		fmt.Println("Usage: autocomply <command>")
+		fmt.Println("Commands:\n  build\n  report")
+		return
+	}
+
+	command := os.Args[1]
+
+	switch command {
+	case "build":
+		buildProject()
+	case "report":
+		generateReport()
+	default:
+		fmt.Printf("Unknown command: %s\n", command)
+	}
+}
+
+func buildProject() {
 	cwd, err := os.Getwd()
 	if err != nil {
 		logError("Failed to get current directory", err)
 		return
 	}
 
-	// Load the configuration
 	config, err := loadConfig(filepath.Join(cwd, "config.json"))
 	if err != nil {
 		logError("Failed to load configuration", err)
 		return
 	}
 
-	// Ensure output directory exists
 	outputPath := filepath.Join(cwd, "output")
 	err = os.MkdirAll(outputPath, 0755)
 	if err != nil {
@@ -39,7 +57,6 @@ func main() {
 		return
 	}
 
-	// Process each Markdown file
 	templatePath := filepath.Join(cwd, "templates")
 	templates, err := os.ReadDir(templatePath)
 	if err != nil {
@@ -50,6 +67,11 @@ func main() {
 	for _, template := range templates {
 		processTemplate(templatePath, outputPath, template.Name(), config)
 	}
+}
+
+func generateReport() {
+	// Implement report generation logic here
+	fmt.Println("Report generation not implemented yet.")
 }
 
 func loadConfig(filePath string) (Config, error) {
@@ -77,9 +99,10 @@ func processTemplate(templatePath, outputPath, templateName string, config Confi
 	content = strings.ReplaceAll(content, "{{companyName}}", config.CompanyName)
 	content = strings.ReplaceAll(content, "{{ceoName}}", config.CeoName)
 	content = strings.ReplaceAll(content, "{{cisoName}}", config.CisoName)
+	content = strings.ReplaceAll(content, "{{mainSecPolicyName}}", config.MainSecPolicyName)
 
-	// Remove 'implements' variables
-	content = removeImplementsVariables(content)
+	// Remove 'compliance' tags
+	content = removeComplianceTags(content)
 
 	outputFile := filepath.Join(outputPath, templateName)
 	err = os.WriteFile(outputFile, []byte(content), 0644)
@@ -91,10 +114,10 @@ func processTemplate(templatePath, outputPath, templateName string, config Confi
 	fmt.Println("Processed and saved:", outputFile)
 }
 
-// removeImplementsVariables removes placeholders that start with 'implements'
-func removeImplementsVariables(content string) string {
-	// Regex pattern to match {{implements: ...}} variables
-	pattern := `{{implements: [^}]+}}`
+// removeComplianceTags removes compliance HTML comment tags
+func removeComplianceTags(content string) string {
+	// Regex pattern to match <!-- compliance: ... --> and <!-- /compliance: ... --> tags
+	pattern := `<!-- compliance: .*? -->|<!-- /compliance: .*? -->`
 	re := regexp.MustCompile(pattern)
 
 	// Replace all occurrences with an empty string
