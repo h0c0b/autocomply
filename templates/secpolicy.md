@@ -4,10 +4,11 @@
 
 This document outlines the security policies and procedures for {{companyName}}. Our aim is to protect both our company's assets and our customers' data from unauthorized access and other cyber threats.
 
+<!-- compliance: NIST ID.AM-6 -->
 ## Scope
 
 This policy applies to all employees, contractors, and affiliates of {{companyName}}.
-
+<!-- /compliance: NIST ID.AM-6 -->
 ## Policy
 
 ### General Security Measures
@@ -37,8 +38,7 @@ This policy applies to all employees, contractors, and affiliates of {{companyNa
 - Violations of this security policy will be handled according to {{companyName}}'s disciplinary procedures.
 - Continuous monitoring will be conducted to ensure compliance with these policies.
 
-## Compliance
-
+## Compliance Control
 
 ## Approval
 
