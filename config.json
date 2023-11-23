@@ -1,5 +1,6 @@
 {
-    "companyName": "Example SuperHero Company",
+    "companyName": "SuperHero Company",
+    "companyShortName": "SH",
     "ceoName": "John Doe",
     "cisoName": "Jane Smith",
     "mainSecPolicyName": "Security Policy",

@@ -1,13 +1,13 @@
-# Security Policy Example SuperHero Company
+# Security Policy SuperHero Company
 
 ## Purpose
 
-This document outlines the security policies and procedures for Example SuperHero Company. Our aim is to protect both our company's assets and our customers' data from unauthorized access and other cyber threats.
+This document outlines the security policies and procedures for SuperHero Company. Our aim is to protect both our company's assets and our customers' data from unauthorized access and other cyber threats.
 
 
 ## Scope
 
-This policy applies to all employees, contractors, and affiliates of Example SuperHero Company.
+This policy applies to all employees, contractors, and affiliates of SuperHero Company.
 
 ## Policy
 
@@ -15,6 +15,8 @@ This policy applies to all employees, contractors, and affiliates of Example Sup
 
 - All employees must adhere to the established information security protocols.
 - Regular security training will be provided to all staff members.
+
+- We must do asset management
 
 ### Data Protection
 
@@ -35,13 +37,14 @@ This policy applies to all employees, contractors, and affiliates of Example Sup
 
 ## Enforcement
 
-- Violations of this security policy will be handled according to Example SuperHero Company's disciplinary procedures.
+- Violations of this security policy will be handled according to SuperHero Company's disciplinary procedures.
 - Continuous monitoring will be conducted to ensure compliance with these policies.
 
 ## Compliance Control
 
 Compliance controls covered by the document:
 - NIST ID.AM-6
+- NIST ID.AM-1
 
 ## Approval
 

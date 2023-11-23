@@ -12,6 +12,7 @@ import (
 // Config represents the structure of your JSON config file
 type Config struct {
 	CompanyName       string `json:"companyName"`
+	CompanyShortName  string `json:"companyShortName"`
 	CeoName           string `json:"ceoName"`
 	CisoName          string `json:"cisoName"`
 	MainSecPolicyName string `json:"mainSecPolicyName"`
@@ -29,7 +30,7 @@ func main() {
 
 	switch command {
 	case "build":
-		buildProject()
+		buildPolicies()
 	case "report":
 		generateReport()
 	default:
@@ -37,7 +38,7 @@ func main() {
 	}
 }
 
-func buildProject() {
+func buildPolicies() {
 	cwd, err := os.Getwd()
 	if err != nil {
 		logError("Failed to get current directory", err)
@@ -95,6 +96,7 @@ func processTemplate(templatePath, outputPath, templateName string, config Confi
 	content = strings.ReplaceAll(content, "{{ceoName}}", config.CeoName)
 	content = strings.ReplaceAll(content, "{{cisoName}}", config.CisoName)
 	content = strings.ReplaceAll(content, "{{mainSecPolicyName}}", config.MainSecPolicyName)
+	content = strings.ReplaceAll(content, "{{companyShortName}}", config.CompanyShortName)
 
 	outputFile := filepath.Join(outputPath, templateName)
 	err = os.WriteFile(outputFile, []byte(content), 0644)

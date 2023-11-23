@@ -15,7 +15,9 @@ This policy applies to all employees, contractors, and affiliates of {{companyNa
 
 - All employees must adhere to the established information security protocols.
 - Regular security training will be provided to all staff members.
-
+<!-- compliance: NIST ID.AM-1 -->
+- We must do asset management
+<!-- /compliance: NIST ID.AM-1 -->
 ### Data Protection
 
 - Sensitive data must be encrypted and securely stored.
