@@ -27,12 +27,23 @@ func main() {
 	}
 
 	command := os.Args[1]
+	cwd, err := os.Getwd()
+	if err != nil {
+		logError("Failed to get current directory", err)
+		return
+	}
+
+	config, err := loadConfig(filepath.Join(cwd, "config.json"))
+	if err != nil {
+		logError("Failed to load configuration", err)
+		return
+	}
 
 	switch command {
 	case "build":
 		buildPolicies()
 	case "report":
-		generateReport()
+		generateReport(config)
 	default:
 		fmt.Printf("Unknown command: %s\n", command)
 	}
@@ -165,9 +176,53 @@ func appendComplianceSection(content string, ids []string) string {
 	return content + "\n## Compliance Control" + complianceInsert
 }
 
-func generateReport() {
-	// Implement report generation logic here
-	fmt.Println("Report generation not implemented yet.")
+func generateReport(config Config) {
+	// Open the report file for writing
+	reportFile, err := os.Create("./output/report.md")
+	if err != nil {
+		panic(err)
+	}
+	defer reportFile.Close()
+
+	// Iterate over each file in the ./templates directory
+	filepath.Walk("./templates", func(path string, info os.FileInfo, err error) error {
+		if !info.IsDir() {
+			// Read the file contents
+			contentBytes, err := os.ReadFile(path)
+			if err != nil {
+				panic(err)
+			}
+
+			// Convert the byte slice to a string
+			content := string(contentBytes)
+
+			// Replace placeholders with data from the Config struct
+			content = strings.ReplaceAll(content, "{{companyName}}", config.CompanyName)
+			content = strings.ReplaceAll(content, "{{ceoName}}", config.CeoName)
+			content = strings.ReplaceAll(content, "{{cisoName}}", config.CisoName)
+			content = strings.ReplaceAll(content, "{{mainSecPolicyName}}", config.MainSecPolicyName)
+			content = strings.ReplaceAll(content, "{{companyShortName}}", config.CompanyShortName)
+
+			// Match the policy name from the # header
+			headerRegex := regexp.MustCompile(`# (.*)`)
+			headerMatch := headerRegex.FindStringSubmatch(content)
+
+			// Match the <!-- compliance: > tags and the enclosed paragraphs of text
+			tagRegex := regexp.MustCompile(`(?s)<!-- compliance: (.*?) -->(.*?)<!-- /compliance: (.*?)-->`)
+			tagMatches := tagRegex.FindAllStringSubmatch(content, -1)
+
+			// Write the policy name, tag, and corresponding paragraph to the report.md file
+			if len(headerMatch) > 1 {
+				reportFile.WriteString(headerMatch[1] + "\n")
+			}
+			for _, match := range tagMatches {
+				if len(match) > 2 {
+					reportFile.WriteString(match[1] + "\n" + match[2] + "\n")
+				}
+			}
+		}
+		return nil
+	})
 }
 
 func loadConfig(filePath string) (Config, error) {
