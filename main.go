@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strings"
 )
 
@@ -210,6 +211,10 @@ func generateReport(config Config) {
 			// Match the <!-- compliance: > tags and the enclosed paragraphs of text
 			tagRegex := regexp.MustCompile(`(?s)<!-- compliance: (.*?) -->(.*?)<!-- /compliance: (.*?)-->`)
 			tagMatches := tagRegex.FindAllStringSubmatch(content, -1)
+			// Sort the tags
+			sort.Slice(tagMatches, func(i, j int) bool {
+				return tagMatches[i][1] < tagMatches[j][1]
+			})
 
 			// Write the policy name, tag, and corresponding paragraph to the report.md file
 			if len(headerMatch) > 1 {
